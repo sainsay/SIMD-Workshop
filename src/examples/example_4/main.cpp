@@ -32,7 +32,12 @@ int main(int argn, char** args) {
 			}
 		}
 		*/
-
+		uint32_t* image = static_cast<uint32_t*>(malloc(SCRHEIGHT * SCRWIDTH * sizeof(uint32_t)));
+		if (image == nullptr)
+		{
+			return 1;
+		}
+		memset(image, 0, SCRHEIGHT * SCRWIDTH * sizeof(uint32_t));
 		// based on http://www.cs.uu.nl/docs/vakken/magr/2017-2018/files/SIMD%20Tutorial.pdf
 		for (int y = 0; y < SCRHEIGHT; y++)
 		{
@@ -63,7 +68,7 @@ int main(int argn, char** args) {
 					int r = std::min(255, std::max(0, (int)(ox[lane] * 255)));
 					int g = std::min(255, std::max(0, (int)(oy[lane] * 255)));
 
-					screen->Plot(x + lane, y, (r << 16) + (g << 8));
+					image[ x  + lane + y * SCRWIDTH] = (r << 16) + (g << 8);
 				}
 			}
 		}
