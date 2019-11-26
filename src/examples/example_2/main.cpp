@@ -1,12 +1,12 @@
 #include <intrin.h>
 #include <random>
 
-int main(int argn, char** args) {
-	_CRT_UNUSED(argn);
-	_CRT_UNUSED(args);
+int main( int argn, char** args ) {
+	_CRT_UNUSED( argn );
+	_CRT_UNUSED( args );
 	{
 		// accessing your integer values
-		__m128i simd_vec = _mm_set_epi32(rand(), rand(), rand(), rand());
+		__m128i simd_vec = _mm_set_epi32( rand(), rand(), rand(), rand() );
 
 
 		// (1)
@@ -14,12 +14,12 @@ int main(int argn, char** args) {
 
 
 		// (2)
-		first_int = reinterpret_cast<__int32*>(&simd_vec)[0]; // Undefined Behaviour: Type punning.
+		first_int = reinterpret_cast< __int32* >( &simd_vec )[0]; // Undefined Behaviour: Type punning.
 
 
 		// (3)
 		__int32 int_vec[4];
-		std::memcpy(int_vec, &simd_vec, sizeof(__m128i));
+		std::memcpy( int_vec, &simd_vec, sizeof( __m128i ) );
 		first_int = int_vec[0]; // no Type punning but more typing.
 
 
@@ -41,7 +41,7 @@ int main(int argn, char** args) {
 		};
 #pragma warning(pop)
 		vec4 simd_vec2;
-		simd_vec2.m = _mm_set_epi32(rand(), rand(), rand(), rand());
+		simd_vec2.m = _mm_set_epi32( rand(), rand(), rand(), rand() );
 
 		first_int = simd_vec2.x;
 	}
